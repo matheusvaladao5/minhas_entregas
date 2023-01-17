@@ -8,6 +8,7 @@ class LoginWidget extends StatelessWidget {
   final textEmail = "E-mail";
   final textPassword = "Password";
   final textLogin = const Text("Login");
+  final textRegister = const Text("Cadastre-se");
 
   static final TextEditingController _email = new TextEditingController();
   static final TextEditingController _pass = new TextEditingController();
@@ -52,16 +53,22 @@ class LoginWidget extends StatelessWidget {
                   keyboardType: TextInputType.text,
                   obscureText: true,
                 ),
-                Padding(padding: const EdgeInsets.only(top: 20.0)),
-                MaterialButton(
-                  height: 40.0,
-                  minWidth: 300.0,
-                  color: Colors.amber,
-                  child: textLogin,
-                  onPressed: () {
-                    doLogin(context);
-                  },
-                  splashColor: Colors.blue,
+                Padding(
+                    padding: const EdgeInsets.only(top: 20.0, bottom: 20.0)),
+                SizedBox(
+                    width: double.infinity,
+                    child: ElevatedButton(
+                        onPressed: () {
+                          doLogin(context);
+                        },
+                        child: textLogin)),
+                Padding(padding: const EdgeInsets.only(top: 10.0)),
+                SizedBox(
+                  width: double.infinity,
+                  child: TextButton.icon(
+                      onPressed: () {},
+                      icon: const Icon(Icons.add),
+                      label: textRegister),
                 ),
               ],
             )),
