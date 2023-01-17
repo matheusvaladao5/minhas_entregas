@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:minhas_entregas/screens/home.dart';
 import 'package:minhas_entregas/screens/login.dart';
+import 'package:minhas_entregas/screens/register.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -19,7 +20,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.amber,
       ),
       initialRoute: '/',
-      routes: {'/': (context) => const LoginWidget()},
+      routes: {'/': (context) => RegisterWidget()},
     );
   }
 }

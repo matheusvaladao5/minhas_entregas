@@ -28,51 +28,49 @@ class LoginWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
-      appBar: AppBar(
-        title: title,
-      ),
-      body: SingleChildScrollView(
-        child: Container(
-            padding: const EdgeInsets.all(40.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: <Widget>[
-                TextFormField(
-                  controller: _email,
-                  decoration: InputDecoration(
-                    labelText: textEmail,
-                  ),
-                  keyboardType: TextInputType.emailAddress,
+        backgroundColor: Colors.white,
+        appBar: AppBar(
+          title: title,
+        ),
+        body: Container(
+          padding: const EdgeInsets.all(40.0),
+          child: Center(
+              child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              TextFormField(
+                controller: _email,
+                decoration: InputDecoration(
+                  labelText: textEmail,
                 ),
-                TextFormField(
-                  controller: _pass,
-                  decoration: InputDecoration(
-                    labelText: textPassword,
-                  ),
-                  keyboardType: TextInputType.text,
-                  obscureText: true,
+                keyboardType: TextInputType.emailAddress,
+              ),
+              TextFormField(
+                controller: _pass,
+                decoration: InputDecoration(
+                  labelText: textPassword,
                 ),
-                Padding(
-                    padding: const EdgeInsets.only(top: 20.0, bottom: 20.0)),
-                SizedBox(
-                    width: double.infinity,
-                    child: ElevatedButton(
-                        onPressed: () {
-                          doLogin(context);
-                        },
-                        child: textLogin)),
-                Padding(padding: const EdgeInsets.only(top: 10.0)),
-                SizedBox(
+                keyboardType: TextInputType.text,
+                obscureText: true,
+              ),
+              const Padding(padding: EdgeInsets.only(top: 20.0, bottom: 20.0)),
+              SizedBox(
                   width: double.infinity,
-                  child: TextButton.icon(
-                      onPressed: () {},
-                      icon: const Icon(Icons.add),
-                      label: textRegister),
-                ),
-              ],
-            )),
-      ),
-    );
+                  child: ElevatedButton(
+                      onPressed: () {
+                        doLogin(context);
+                      },
+                      child: textLogin)),
+              Padding(padding: const EdgeInsets.only(top: 10.0)),
+              SizedBox(
+                width: double.infinity,
+                child: TextButton.icon(
+                    onPressed: () {},
+                    icon: const Icon(Icons.add),
+                    label: textRegister),
+              ),
+            ],
+          )),
+        ));
   }
 }
