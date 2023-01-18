@@ -1,4 +1,6 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:minhas_entregas/main.dart';
 import 'package:minhas_entregas/utils/custom_widgets.dart';
 import 'package:minhas_entregas/widgets/input_form.dart';
 
@@ -16,15 +18,22 @@ class RegisterWidget extends StatelessWidget {
     return reg.hasMatch(email);
   }
 
-  void register(BuildContext context) async {
-    try {
-      
+  Future register(BuildContext context) async {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (context) => Center(child: CircularProgressIndicator()),
+    );
 
-      //if (user )
-      //Navigator.pop(context);
-    } catch (e) {
+    try {
+      await FirebaseAuth.instance.createUserWithEmailAndPassword(
+          email: _emailController.text.trim(),
+          password: _passwordController.text.trim());
+    } on FirebaseException catch (e) {
       print(e);
     }
+
+    navigatorKey.currentState!.popUntil((route) => route.isFirst);
   }
 
   @override
