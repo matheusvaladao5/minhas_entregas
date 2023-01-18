@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:minhas_entregas/screens/home.dart';
 
@@ -13,16 +14,9 @@ class LoginWidget extends StatelessWidget {
   static final TextEditingController _email = new TextEditingController();
   static final TextEditingController _pass = new TextEditingController();
 
-  String get username => _email.text;
-  String get password => _pass.text;
 
-  void doLogin(BuildContext context) {
-    if (username == 'firebase' && password == 'pass') {
-    } else {}
-  }
-
-  void register(BuildContext context) {
-    return;
+  Future doLogin(BuildContext context) async {
+    await FirebaseAuth.instance.signInWithEmailAndPassword(email: _email.text.trim(), password: _pass.text.trim());
   }
 
   @override
@@ -65,7 +59,9 @@ class LoginWidget extends StatelessWidget {
               SizedBox(
                 width: double.infinity,
                 child: TextButton.icon(
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.pushNamed(context, "/register");
+                    },
                     icon: const Icon(Icons.add),
                     label: textRegister),
               ),
