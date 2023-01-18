@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:minhas_entregas/main.dart';
 import 'package:minhas_entregas/screens/home.dart';
 
 class LoginWidget extends StatelessWidget {
@@ -14,9 +15,21 @@ class LoginWidget extends StatelessWidget {
   static final TextEditingController _email = new TextEditingController();
   static final TextEditingController _pass = new TextEditingController();
 
-
   Future doLogin(BuildContext context) async {
-    await FirebaseAuth.instance.signInWithEmailAndPassword(email: _email.text.trim(), password: _pass.text.trim());
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (context) => Center(child: CircularProgressIndicator()),
+    );
+
+    try {
+      await FirebaseAuth.instance.signInWithEmailAndPassword(
+          email: _email.text.trim(), password: _pass.text.trim());
+    } on FirebaseAuthException catch (e) {
+      print(e);
+    }
+
+    navigatorKey.currentState!.popUntil((route) => route.isFirst);
   }
 
   @override
