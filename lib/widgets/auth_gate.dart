@@ -1,6 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:minhas_entregas/screens/home.dart';
+import 'package:minhas_entregas/mydeliveries/screens/list_deliveries.dart';
 import 'package:minhas_entregas/screens/login.dart';
 
 class AuthGate extends StatelessWidget {
@@ -17,7 +17,7 @@ class AuthGate extends StatelessWidget {
           return const Center(
               child: Text("Algo deu errado."));
         } else if (snapshot.hasData) {
-          return const HomeWidget();
+          return const ListDeliveriesWidget();
         }
         return const LoginWidget();
       },
