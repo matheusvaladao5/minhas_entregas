@@ -4,22 +4,19 @@ class Receiver {
   String name;
   String address;
   String phone;
-  double latitude;
-  double longitude;
   double value;
+  dynamic localization;
 
   DocumentReference? reference;
 
-  Receiver(this.name, this.address, this.phone, this.latitude, this.longitude,
-      this.value);
+  Receiver(this.name, this.address, this.phone, this.value, this.localization);
 
   Receiver.fromMap(Map<String, dynamic> map, {this.reference})
       : name = map['name'],
         address = map['address'],
         phone = map['phone'],
-        latitude = map['latitude'],
-        longitude = map['longitude'],
-        value = map['value'];
+        value = map['value'],
+        localization = map['localization'];
 
   Receiver.fromSnapshot(QueryDocumentSnapshot snapshot)
       : this.fromMap(snapshot.data() as Map<String, dynamic>,
