@@ -1,4 +1,3 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:minhas_entregas/utils/custom_widgets.dart';
 import 'package:minhas_entregas/widgets/input_form.dart';
@@ -19,8 +18,7 @@ class RegisterWidget extends StatelessWidget {
 
   void register(BuildContext context) async {
     try {
-      var user = await FirebaseAuth.instance.createUserWithEmailAndPassword(
-          email: _emailController.text, password: _passwordController.text);
+      
 
       //if (user )
       //Navigator.pop(context);
