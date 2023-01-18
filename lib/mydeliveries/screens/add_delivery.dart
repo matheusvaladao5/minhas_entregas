@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:masked_text/masked_text.dart';
 import 'package:minhas_entregas/mydeliveries/model/receiver.dart';
 import 'package:minhas_entregas/utils/custom_widgets.dart';
 import 'package:minhas_entregas/widgets/input_form.dart';
@@ -23,41 +24,69 @@ class DeliveryFormWidget extends StatelessWidget {
           padding: const EdgeInsets.all(10),
           child: Form(
               key: _formKey,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+              child: ListView(
+                //crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  Padding(padding: EdgeInsets.only(top: 20)),
                   DefaultInputFormWidget(
                       placeholder: "Informe o produto",
                       label: "Produto",
                       controller: _productController,
                       validationMsg: "Insira o nome do produto",
                       obscureText: false),
+                  Padding(padding: EdgeInsets.only(top: 20)),
                   DefaultInputFormWidget(
                       placeholder: "Informe a marca",
                       label: "Marca",
                       controller: _brandController,
                       validationMsg: "Insira o marca do produto",
                       obscureText: false),
-                  DefaultInputFormWidget(
-                      placeholder: "Informe o peso",
-                      label: "Peso",
-                      controller: _weightController,
-                      validationMsg: "Insira o peso do produto",
-                      obscureText: false),
-                  DefaultInputFormWidget(
-                      placeholder: "Informe a data inicial prevista",
-                      label: "Data inicial",
-                      controller: _initialDateController,
-                      validationMsg: "Insira a data inicial prevista",
-                      obscureText: false),
-                  DefaultInputFormWidget(
-                      placeholder: "Informe a data final prevista",
-                      label: "Data final",
-                      controller: _finalDateController,
-                      validationMsg: "Insira a data final prevista",
-                      obscureText: false),
+                  Padding(padding: EdgeInsets.only(top: 20)),
+                  TextFormField(
+                    decoration: const InputDecoration(
+                        hintText: "Informe o peso", labelText: "Peso"),
+                    keyboardType: TextInputType.number,
+                    controller: _weightController,
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return "Insira o peso do produto";
+                      }
+                      return null;
+                    },
+                  ),
+                  Padding(padding: EdgeInsets.only(top: 20)),
+                  MaskedTextField(
+                    controller: _initialDateController,
+                    mask: "##/##/#####",
+                    maxLength: 10,
+                    keyboardType: TextInputType.number,
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return "Insira a data inicial";
+                      }
+                      return null;
+                    },
+                    decoration: const InputDecoration(
+                        hintText: "Informe a data inicial prevista",
+                        labelText: "Data Inicial"),
+                  ),
+                  MaskedTextField(
+                    controller: _finalDateController,
+                    mask: "##/##/#####",
+                    maxLength: 10,
+                    keyboardType: TextInputType.number,
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return "Insira a data final";
+                      }
+                      return null;
+                    },
+                    decoration: const InputDecoration(
+                        hintText: "Informe a data final prevista",
+                        labelText: "Data Final"),
+                  ),
                   Padding(
-                      padding: EdgeInsets.only(top: 20),
+                      padding: EdgeInsets.only(top: 10),
                       child: SizedBox(
                         width: double.infinity,
                         child: StreamBuilder<QuerySnapshot>(
@@ -78,7 +107,7 @@ class DeliveryFormWidget extends StatelessWidget {
                             }),
                       )),
                   Padding(
-                      padding: const EdgeInsets.only(top: 20),
+                      padding: const EdgeInsets.only(top: 30),
                       child: SizedBox(
                         width: double.infinity,
                         child:
