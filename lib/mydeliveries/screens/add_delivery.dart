@@ -32,7 +32,6 @@ class DeliveryFormWidget extends StatelessWidget {
           child: Form(
               key: _formKey,
               child: ListView(
-                //crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Padding(padding: EdgeInsets.only(top: 20)),
                   DefaultInputFormWidget(

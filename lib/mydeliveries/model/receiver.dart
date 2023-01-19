@@ -29,4 +29,9 @@ class Receiver {
         "value": value,
         "localization": localization
       };
+
+  static Receiver toObject(dynamic json) {
+    return Receiver(json['name'], json['address'], json['phone'], json['value'],
+        json['localization']);
+  }
 }

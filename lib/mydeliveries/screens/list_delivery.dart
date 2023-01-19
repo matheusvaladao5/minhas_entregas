@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:minhas_entregas/mydeliveries/model/delivery.dart';
 import 'package:minhas_entregas/mydeliveries/model/status.dart';
 import 'package:minhas_entregas/mydeliveries/screens/add_delivery.dart';
+import 'package:minhas_entregas/mydeliveries/screens/show_delivery.dart';
 import 'package:minhas_entregas/widgets/nav_drawer.dart';
 
 class ListDeliveryWidget extends StatelessWidget {
@@ -61,10 +62,10 @@ class ListDeliveryWidget extends StatelessWidget {
       BuildContext context, List<QueryDocumentSnapshot> snapshots) {
     return ListView(
         padding: EdgeInsets.only(top: 30),
-        children: snapshots.map((data) => _buildItem(data)).toList());
+        children: snapshots.map((data) => _buildItem(context, data)).toList());
   }
 
-  Widget _buildItem(QueryDocumentSnapshot data) {
+  Widget _buildItem(BuildContext context, QueryDocumentSnapshot data) {
     final delivery = Delivery.fromSnapshot(data);
     return Padding(
         padding: EdgeInsets.all(12),
@@ -75,6 +76,13 @@ class ListDeliveryWidget extends StatelessWidget {
           child: ListTile(
               title: Text("${delivery.product} - ${delivery.brand}"),
               subtitle: Text(Status.getEnum(delivery.status).value),
+              onTap: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) =>
+                            DeliveryWidget(delivery: delivery)));
+              },
               onLongPress: () {
                 data.reference.delete();
               }),
