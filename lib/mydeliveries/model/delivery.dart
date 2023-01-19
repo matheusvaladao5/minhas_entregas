@@ -1,8 +1,4 @@
-import 'dart:ui';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:minhas_entregas/mydeliveries/model/receiver.dart';
-import 'package:minhas_entregas/mydeliveries/model/status.dart';
 
 class Delivery {
   String product;
@@ -47,21 +43,3 @@ class Delivery {
         "status": status
       };
 }
-
-
-// {
-//     "product": "Microondas",
-//     "brand": "Philips",
-//     "weight": 2.3,
-//     "rate": 3,
-//     "receiver": {
-//         "name": "Marcio",
-//         "address": "Rua Jose da Silva, 180",
-//         "phone": "1198562344",
-//         "latitude": 153.2251,
-//         "longitude": 207.5568
-//     },
-//     "initialDate": "2012-04-23T18:25:43.511Z",
-//     "finalDate": "2012-04-23T18:25:43.511Z",
-//     "status": "delivered"
-// }

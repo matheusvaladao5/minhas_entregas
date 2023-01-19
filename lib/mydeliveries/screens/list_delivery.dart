@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:minhas_entregas/mydeliveries/model/delivery.dart';
+import 'package:minhas_entregas/mydeliveries/model/status.dart';
 import 'package:minhas_entregas/mydeliveries/screens/add_delivery.dart';
 import 'package:minhas_entregas/widgets/nav_drawer.dart';
 
@@ -66,9 +67,8 @@ class ListDeliveryWidget extends StatelessWidget {
               border: Border.all(color: Colors.grey),
               borderRadius: BorderRadius.circular(5)),
           child: ListTile(
-              leading: Text('0'),
-              title: Text(delivery.product),
-              subtitle: Text(delivery.brand),
+              title: Text("${delivery.product} - ${delivery.brand}"),
+              subtitle: Text(Status.getEnum(delivery.status).value),
               onLongPress: () {
                 data.reference.delete();
               }),
