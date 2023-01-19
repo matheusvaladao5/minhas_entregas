@@ -21,4 +21,12 @@ class Receiver {
   Receiver.fromSnapshot(QueryDocumentSnapshot snapshot)
       : this.fromMap(snapshot.data() as Map<String, dynamic>,
             reference: snapshot.reference);
+
+  Map<String, dynamic> toJson() => {
+        "name": phone,
+        "address": address,
+        "phone": phone,
+        "value": value,
+        "localization": localization
+      };
 }

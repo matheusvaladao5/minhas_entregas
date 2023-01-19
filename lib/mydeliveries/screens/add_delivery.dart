@@ -1,9 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:masked_text/masked_text.dart';
+import 'package:minhas_entregas/mydeliveries/model/delivery.dart';
 import 'package:minhas_entregas/mydeliveries/model/receiver.dart';
+import 'package:minhas_entregas/mydeliveries/model/status.dart';
 import 'package:minhas_entregas/utils/custom_widgets.dart';
 import 'package:minhas_entregas/widgets/input_form.dart';
+import 'package:intl/intl.dart';
 
 class DeliveryFormWidget extends StatelessWidget {
   DeliveryFormWidget({Key? key}) : super(key: key);
@@ -15,6 +18,7 @@ class DeliveryFormWidget extends StatelessWidget {
   final _weightController = TextEditingController();
   final _initialDateController = TextEditingController();
   final _finalDateController = TextEditingController();
+  dynamic dropDownValue;
 
   @override
   Widget build(BuildContext context) {
@@ -64,6 +68,11 @@ class DeliveryFormWidget extends StatelessWidget {
                       if (value == null || value.isEmpty) {
                         return "Insira a data inicial";
                       }
+                      try {
+                        DateFormat('dd/MM/yyyy').parse(value);
+                      } catch (e) {
+                        return "Insira a data inicial";
+                      }
                       return null;
                     },
                     decoration: const InputDecoration(
@@ -77,6 +86,11 @@ class DeliveryFormWidget extends StatelessWidget {
                     keyboardType: TextInputType.number,
                     validator: (value) {
                       if (value == null || value.isEmpty) {
+                        return "Insira a data final";
+                      }
+                      try {
+                        DateFormat('dd/MM/yyyy').parse(value);
+                      } catch (e) {
                         return "Insira a data final";
                       }
                       return null;
@@ -110,8 +124,27 @@ class DeliveryFormWidget extends StatelessWidget {
                       padding: const EdgeInsets.only(top: 30),
                       child: SizedBox(
                         width: double.infinity,
-                        child:
-                            ElevatedButton(onPressed: () {}, child: salvarText),
+                        child: ElevatedButton(
+                            onPressed: () {
+                              if (_formKey.currentState!.validate()) {
+                                final receiver =
+                                    Receiver.fromSnapshot(dropDownValue);
+                                final delivery = Delivery(
+                                    _productController.text,
+                                    _brandController.text,
+                                    double.parse(_weightController.text),
+                                    receiver.value,
+                                    receiver.toJson(),
+                                    DateFormat('dd/MM/yyyy')
+                                        .parse(_initialDateController.text),
+                                    DateFormat('dd/MM/yyyy')
+                                        .parse(_finalDateController.text),
+                                    true,
+                                    Status.waiting.name);
+                                Navigator.pop(context, delivery);
+                              }
+                            },
+                            child: salvarText),
                       ))
                 ],
               ))),
@@ -121,8 +154,9 @@ class DeliveryFormWidget extends StatelessWidget {
   Widget _buildDropdownButtonFormField(
       BuildContext context, List<QueryDocumentSnapshot> snapshots) {
     return DropdownButtonFormField<dynamic>(
+        value: dropDownValue,
         validator: (value) {
-          if (value == null || value.isEmpty) {
+          if (dropDownValue == null) {
             return "Selecione o recebedor";
           }
           return null;
@@ -131,13 +165,15 @@ class DeliveryFormWidget extends StatelessWidget {
           hintText: 'Selecione o Recebedor',
         ),
         items: snapshots.map((data) => _buildDropdownMenuItem(data)).toList(),
-        onChanged: (dynamic? newValue) {});
+        onChanged: (dynamic? newValue) {
+          dropDownValue = newValue;
+        });
   }
 
   DropdownMenuItem _buildDropdownMenuItem(QueryDocumentSnapshot data) {
     final receiver = Receiver.fromSnapshot(data);
     return DropdownMenuItem<dynamic>(
-      value: receiver,
+      value: data,
       child: Text(receiver.name.toString()),
     );
   }
