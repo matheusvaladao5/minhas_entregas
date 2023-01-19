@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:masked_text/masked_text.dart';
 import 'package:minhas_entregas/mydeliveries/model/delivery.dart';
@@ -22,6 +23,8 @@ class DeliveryFormWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final user = FirebaseAuth.instance.currentUser!;
+
     return Scaffold(
       appBar: AppBar(title: title),
       body: Padding(
@@ -130,6 +133,7 @@ class DeliveryFormWidget extends StatelessWidget {
                                 final receiver =
                                     Receiver.fromSnapshot(dropDownValue);
                                 final delivery = Delivery(
+                                    user.email!,
                                     _productController.text,
                                     _brandController.text,
                                     double.parse(_weightController.text),

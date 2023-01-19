@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Delivery {
+  String email;
   String product;
   String brand;
   double weight;
@@ -13,11 +14,12 @@ class Delivery {
 
   DocumentReference? reference;
 
-  Delivery(this.product, this.brand, this.weight, this.rate, this.receiver,
-      this.initialDate, this.finalDate, this.paid, this.status);
+  Delivery(this.email, this.product, this.brand, this.weight, this.rate,
+      this.receiver, this.initialDate, this.finalDate, this.paid, this.status);
 
   Delivery.fromMap(Map<String, dynamic> map, {this.reference})
-      : product = map['product'],
+      : email = map['email'],
+        product = map['product'],
         brand = map['brand'],
         weight = map['weight'],
         rate = map['rate'],
@@ -32,6 +34,7 @@ class Delivery {
             reference: snapshot.reference);
 
   Map<String, dynamic> toJson() => {
+        "email": email,
         "product": product,
         "brand": brand,
         "weight": weight,

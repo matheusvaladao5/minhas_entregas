@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:minhas_entregas/mydeliveries/model/delivery.dart';
 import 'package:minhas_entregas/mydeliveries/model/status.dart';
@@ -39,8 +40,13 @@ class ListDeliveryWidget extends StatelessWidget {
   }
 
   Widget _buildBody(BuildContext context) {
+    final user = FirebaseAuth.instance.currentUser!;
+
     return StreamBuilder<QuerySnapshot>(
-        stream: FirebaseFirestore.instance.collection("deliveries").snapshots(),
+        stream: FirebaseFirestore.instance
+            .collection("deliveries")
+            .orderBy("email")
+            .startAt([user.email!]).endAt(['${user.email!}\uf8ff']).snapshots(),
         builder: (context, snapshot) {
           if (!snapshot.hasData) return LinearProgressIndicator();
           if (snapshot.data == null) {
