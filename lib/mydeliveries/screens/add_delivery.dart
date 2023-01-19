@@ -121,6 +121,12 @@ class DeliveryFormWidget extends StatelessWidget {
   Widget _buildDropdownButtonFormField(
       BuildContext context, List<QueryDocumentSnapshot> snapshots) {
     return DropdownButtonFormField<dynamic>(
+        validator: (value) {
+          if (value == null || value.isEmpty) {
+            return "Selecione o recebedor";
+          }
+          return null;
+        },
         decoration: const InputDecoration(
           hintText: 'Selecione o Recebedor',
         ),
